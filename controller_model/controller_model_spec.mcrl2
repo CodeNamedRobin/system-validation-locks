@@ -10,8 +10,9 @@ sort WaterLevel = struct top | between | bottom;
 % all actions are associated with a gate
 % the four lights are of type LightColor
 % the communication actions between lock and boatcontroller are of type BoatMoving
-act light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOLight, receiveBOLight: LightColor;
-	sendDownBoatRequest, receiveDownBoatRequest, sendUpBoatRequest, receiveUpBoatRequest, commDownBoat, commUpBoat: BoatMoving;
+act light_TO, light_TI, light_BO, light_BI: LightColor;
+	sendAvailable, receiveAvailable: LockNr;
+	sendDownBoatRequest, receiveDownBoatRequest, sendUpBoatRequest, receiveUpBoatRequest, commDownBoat, commUpBoat: LockNr # BoatMoving;
 	startOpenTopGate, startCloseTopGate, startOpenBottomGate, startCloseBottomGate, arriveTop, arriveBottom, controlDownBoatEnter, receiveDownBoatEnter, controlDBEnter, upBoatEnter, downBoatExit, upBoatExit;
 	
 % Lock process depends on:
@@ -21,22 +22,57 @@ act light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOL
 % what is the color of the lights
 % is a boat moving through a gate at top/bottom gate
 
-proc Lock(i:LockNr, w_level:WaterLevel, boat_present:BoatPresent, top_g_status:GateStatus, bottom_g_status:GateStatus, top_o_light:LightColor, top_i_light:LightColor, bottom_o_light:LightColor, bottom_i_light:LightColor, top_boat_moving:BoatMoving, bottom_boat_moving:BoatMoving, paddle_status:GateStatus, culver_status:GateStatus) = 
+proc Lock(i:LockNr, w_level:WaterLevel, boat_present:BoatPresent, top_g_status:GateStatus, bottom_g_status:GateStatus, top_o_light:LightColor, top_i_light:LightColor, bottom_o_light:LightColor, bottom_i_light:LightColor, top_boat_moving:BoatMoving, bottom_boat_moving:BoatMoving, paddle_status:GateStatus, culvert_status:GateStatus) = 
 	(boat_present == emtpy) % able to receive a boat
-		-> sum request:BoatMoving.receiveDownBoatRequest(request).
+		-> sum request:BoatMoving.receiveDownBoatRequest(i, request).
 			((request == enter && top_o_light == green)
-				-> receiveDownBoatEnter.light_TO(red).Lock(top_boat_moving = enter, top_o_light = red) % when communicate with enter; the boat enters and we set the tolight to red to prevent other boats from entering.
-			<> (request == enter && boat_present == empty && bottom_boat_moving == none) % request to enter, there is no boat in the lock or entering/exiting the lock, so we can receive a boat
-				-> % depending on the water level, gate status, light status, etc, we get the lock ready to accept a downboat.
-		
-
+				-> receiveDownBoatEnter.light_TO(red).Lock(top_boat_moving = enter, top_o_light = red))
+			+ sendAvailable(i).
+	% boat_present != empty)
+	<> (boat_present == downBoat)
+		-> (top_boat_moving == enter)
+			-> downBoatEntered.Lock(top_boat_moving == none) % boat is in the lock
+		<> (top_boat_moving == none && top_g_status == open)
+			-> startCloseTopGate.Lock(top_g_status = closing) % start closing the gate
+		<> (top_g_status == closing) 
+			-> topGateClosed.Lock(top_g_status = closed) % top gate is closed
+		<> (top_g_status == closed && paddle_status == closed)
+			-> startOpenPaddle.Lock(paddle_status = opening, w_level = between) % open paddle to lower water
+		<> (paddle_status == opening)
+			-> paddleOpened.Lock(paddle_status = open)
+		<> (paddle_status == open && w_level == between)
+			-> detectWaterBottom.Lock(w_level = bottom)
+		<> (w_level == bottom && paddle_status == open)
+			-> startClosePaddle.Lock(paddle_status = closing)
+		<> (w_level == bottom && paddle_status == closing)
+			-> paddleClosed.Lock(paddle_status = closed)
+		<> (w_level == bottom && paddle_status == closed && bottom_g_status == closed) % let the downBoat out
+			-> startOpenBottomGate.Lock(bottom_g_status = opening)
+		<> (bottom_g_status == opening)
+			-> bottomGateOpened.Lock(bottom_g_status = open)
+		<> (bottom_g_status == open && bottom_i_light == red)
+			-> light_BI(green).Lock(bottom_i_light = green)
+		<> (bottom_i_light == green)
+			-> downBoatExit.light_BI(red).Lock(bottom_boat_moving = exit, bottom_i_light = red)
+		<> (bottom_boat_moving == exit)
+			-> downBoatExited.Lock(boat_present = empty)
 
 
 proc BoatController(top_waiting: Nat, bottom_waiting: Nat, l_1_busy:LockBusy, l_2_busy:LockBusy) = 
-	arriveTop.BoatController(top_waiting + 1) +
-	arriveBottom.BoatController(bottom_waiting + 1) +
+	sum i:LockNr.receiveAvailable(i).
+		((i == 1)
+			-> BoatController(l_1_busy = available)
+		 <> (i == 2)
+			-> BoatController(l_2_busy = available))
+	+
+	(top_waiting <= 3)
+		-> arriveTop.BoatController(top_waiting + 1) 
+	+
+	(bottom_waiting <= 3)
+		-> arriveBottom.BoatController(bottom_waiting + 1) 
+	+
 	(top_waiting > 0) % if boats waiting at top, we ask that they can enter a lock
-		-> sum lock:LockNr.sendDownBoatRequest(i, enter).
+		-> sum i:LockNr.sendDownBoatRequest(i, enter).
 			(controlDownBoatEnter.BoatController(top_waiting - 1) + % enter lock if can communicate
 			BoatController())
 	
@@ -44,5 +80,6 @@ proc BoatController(top_waiting: Nat, bottom_waiting: Nat, l_1_busy:LockBusy, l_
 init allow( {},
 	 comm( {sendDownBoatRequest|receiveDownBoatRequest -> commDownBoat,
 			controlDownBoatEnter|receiveDownBoatEnter -> commDBEnter,
-			}, Lock||BoatController(0,0)));
+			sendAvailable|receiveAvailable -> commAvailable,
+			}, Lock||BoatController(0,0, available, available)));
 			
