@@ -1,30 +1,7 @@
-sort WaterLevel = struct top | bottom;
-	 WaterStatus = struct rising | lowering | stable;
-	 BoatPresent = struct upBoat | downBoat | empty;
-	 TopGate = struct open | closed;
-	 BottomGate = struct open | closed;
-	 TopMoving = struct enter | exit | none;
-	 BottomMoving = struct enter | exit | none;
-	 TopOLight = struct red | green;
-	 TopILight = struct red | green;
-	 BottomOLight = struct red | green;
-	 BottomILight = struct red | green;
-	 TopGateStatus = struct opening | closing | stable;
-	 BottomGateStatus = struct opening | closing | stable;
-	 Paddle = struct open | closed;
-	 Culvert = struct open | closed;
-
-act light_TO: TopOLight;
-	light_TI: TopILight;
-	light_BO: BottomOLight;
-	light_BI: BottomILight;
-
 % OTHER IDEA FOR SORT WITH THE SAME ELEMENTS IN THE STRUCT
-sort WaterLevel = struct top | bottom;
-	 WaterMoving = struct rising | lowering | stable;
+sort WaterLevel = struct top | middle | bottom;
 	 LightColor = struct red | green;
-	 GateStatus = struct open | closed;
-	 GateMoving = struct opening | closing | stable;
+	 GateStatus = struct open | opening | closed | closing | stopped;
 	 BoatMoving = struct enter | exit | none;
 	 BoatPresent = struct downBoat | upBoat | empty;
 	 LockNr = struct 1 | 2;
@@ -37,14 +14,13 @@ act light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOL
 	startOpenTopGate, startCloseTopGate, startOpenBottomGate, startCloseBottomGate, arriveTop, arriveBottom, controlDownBoatEnter, receiveDownBoatEnter, controlDBEnter, upBoatEnter, downBoatExit, upBoatExit;
 	
 % Lock process depends on:
-% waterlevel + is waterlevel moving
+% waterlevel
 % what kind of boat is in the lock (if any)
-% is top/bottom gate open/closed
-% is top/bottom gate opening/closing/stable
+% is top/bottom gate open/closed/opening/closing/sttopped
 % what is the color of the lights
 % is a boat moving through a gate at top/bottom gate
 
-proc Lock(w_level:WaterLevel, w_moving:WaterMoving, boat_present:BoatPresent, top_g_status:GateStatus, top_g_moving:GateMoving, bottom_g_status:GateStatus, bottom_g_moving:GateMoving, top_o_light:LightColor, top_i_light:LightColor, bottom_o_light:LightColor, bottom_i_light:LightColor, top_boat_moving:BoatMoving, bottom_boat_moving:BoatMoving) = 
+proc Lock(w_level:WaterLevel, boat_present:BoatPresent, top_g_status:GateStatus,, bottom_g_status:GateStatus, top_o_light:LightColor, top_i_light:LightColor, bottom_o_light:LightColor, bottom_i_light:LightColor, top_boat_moving:BoatMoving, bottom_boat_moving:BoatMoving, paddle_status:GateStatus, culver_status:GateStatus) = 
 	sum request:BoatMoving.receiveDownBoatRequest(request).
 		((request == enter && top_o_light == green)
 			-> receiveDownBoatEnter.light_TO(red).Lock(top_boat_moving = enter, top_o_light = red) % when communicate with enter; the boat enters and we set the tolight to red to prevent other boats from entering.
