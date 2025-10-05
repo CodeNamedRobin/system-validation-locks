@@ -13,8 +13,8 @@ sort WaterLevel = struct top | between | bottom;
 
 act light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOLight, receiveBOLight, turnOnTO, turnOffTO: LightColor;
 	sendDownBoatRequest, receiveDownBoatRequest, sendUpBoatRequest, receiveUpBoatRequest, commDownBoat, commUpBoat: LockNr # BoatMoving;
-	startOpenTopGate, startCloseTopGate, startOpenBottomGate, startCloseBottomGate, arriveTop, arriveBottom, controlDownBoatEnter, receiveDownBoatEnter, controlDBEnter, downBoatEnter, upBoatEnter, downBoatExit, upBoatExit, upBoatEntered, downBoatEntered, downBoatExited, upBoatExited, bottomGateClosed, topGateClosed, bottomGateOpened, topGateOpened, startOpenCulvert, culvertOpened, startCloseCulvert, culvertClosed, startOpenPaddle, paddleOpened, startClosePaddle, paddleClosed, detectWaterBottom, detectWaterTop;
-	sendAvailable, receiveAvailable: LockNr;
+	startOpenTopGate, startCloseTopGate, startOpenBottomGate, startCloseBottomGate, arriveTop, arriveBottom, controlDownBoatEnter, receiveDownBoatEnter, commDBEnter, controlDBEnter, downBoatEnter, upBoatEnter, downBoatExit, upBoatExit, upBoatEntered, downBoatEntered, downBoatExited, upBoatExited, bottomGateClosed, topGateClosed, bottomGateOpened, topGateOpened, startOpenCulvert, culvertOpened, startCloseCulvert, culvertClosed, startOpenPaddle, paddleOpened, startClosePaddle, paddleClosed, detectWaterBottom, detectWaterTop;
+	sendAvailable, receiveAvailable, commAvailable: LockNr;
 % Lock process depends on:
 % waterlevel
 % what kind of boat is in the lock (if any)
@@ -107,7 +107,7 @@ proc BoatController(top_waiting: Nat, bottom_waiting: Nat, l_1_busy:LockBusy, l_
 %			BoatController()))
 ;	
 
-init allow( {light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOLight, receiveBOLight, turnOnTO, turnOffTO, },
+init allow( {light_TO, light_TI, light_BO, light_BI, sendTOLight, receiveTOLight, sendBOLight, receiveBOLight, turnOnTO, turnOffTO, commDownBoat, commDBEnter, commAvailable, startOpenTopGate, startCloseTopGate, startOpenBottomGate, startCloseBottomGate, arriveTop, arriveBottom, controlDownBoatEnter, receiveDownBoatEnter, controlDBEnter, downBoatEnter, upBoatEnter, downBoatExit, upBoatExit, upBoatEntered, downBoatEntered, downBoatExited, upBoatExited, bottomGateClosed, topGateClosed, bottomGateOpened, topGateOpened, startOpenCulvert, culvertOpened, startCloseCulvert, culvertClosed, startOpenPaddle, paddleOpened, startClosePaddle, paddleClosed, detectWaterBottom, detectWaterTop},
 	 comm( {sendDownBoatRequest|receiveDownBoatRequest -> commDownBoat,
 			controlDownBoatEnter|receiveDownBoatEnter -> commDBEnter,
 			sendAvailable|receiveAvailable -> commAvailable
