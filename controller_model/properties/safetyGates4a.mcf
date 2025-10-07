@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.detectWater(i, between).true*.bottomGate(i, opened).true*.detectWater(i, bottom)]false
