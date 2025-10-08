@@ -1,6 +1,11 @@
 <root>
  <spec>controller_model_spec.mcrl2</spec>
- <properties/>
+ <properties>
+  <property>safetyGates2</property>
+  <property>safetyGates3</property>
+  <property>safetyGates4a</property>
+  <property>safetyGates4b</property>
+ </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>
  <enumeration_limit>0</enumeration_limit>

@@ -23,6 +23,11 @@ act emergency: LockNr;
 	topGate, bottomGate, culvert, paddle 											: LockNr # GateStatus;		% Top gate actions
 	detectWater																		: LockNr # WaterLevel;
 
+	% Boat actions
+	downBoat: LockNr # BoatLocation;
+
+
+
 
 % Communicating actions
 	sendAvailable, receiveAvailable, assignLock										: LockNr # BoatPresent;
