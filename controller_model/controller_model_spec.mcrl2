@@ -60,53 +60,75 @@ proc Lock(	i				:LockNr,
 		+ 	(boat_present == empty) -> (
 
 				sendAvailable(i, downBoat).Lock(boat_present = downBoat, boat_location = waiting)
-				+ sendAvailable(i, upBoat).Lock(boat_present = upBoat, boat_location = waiting)		
-				+ (bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)
-				+ (top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)
+				+ sendAvailable(i, upBoat).Lock(boat_present = upBoat, boat_location = waiting)
+
+						
+				+ (bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)				% Turn inner bottom light red
+				+ (top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)						% Turn inner top light red
 			)
 
 		+ 	(boat_present == downBoat) ->	(
 
 				(boat_location == waiting) -> (
-					(bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)
-				+	(top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)
-
-				+	(top_g_status == opened && top_i_light == red && top_o_light == red) -> (
-						light_TO(i,green).Lock(top_o_light = green)
-					) 
-				+	(top_g_status == opened && top_o_light == green) -> (
-						receiveDownBoat(i, entering).Lock(boat_location = entering)
-					)
-				)
+				  	(bottom_i_light == green) 
+					-> light_BI(i,red).Lock(bottom_i_light = red)								% Turn inner bottom light red
+				+ 	(top_i_light == green) 
+					-> light_TI(i,red).Lock(top_i_light = red)									% Turn inner top light red	 
+				+ 	(bottom_o_light == green) 
+					-> light_BO(i, red).Lock(bottom_o_light = red)								% Turn bottom outside light red 
+				+ 	(bottom_o_light == red && bottom_g_status == opened)
+					-> bottomGate(i, closing).Lock(bottom_g_status = closing)					% Bottom gate starts closing
+				+ 	(bottom_g_status == closing)
+					-> bottomGate(i,closed).Lock(bottom_g_status = closed)						% Bottom gate is closed
+				+ 	(bottom_g_status == closed && culvert_status == closed && w_level != top)
+					-> culvert(i,opening).Lock(culvert_status = opening, w_level = between)		% Culvert starts opening
+				+ 	(culvert_status == opening)
+					-> culvert(i,opened).Lock(culvert_status = opened)							% Culvert is opened
+				+ 	(w_level == between && culvert_status == opened)
+					-> detectWater(i, top).Lock(w_level = top)									% Water is at top level
+				+ 	(w_level == top && culvert_status == opened)
+					-> culvert(i,closing).Lock(culvert_status = closing)						% Culvert starts closing
+				+ 	(w_level == top && culvert_status == closing)
+					-> culvert(i, closed).Lock(culvert_status = closed)							% Culvert is closed
+				+ 	(w_level == top && culvert_status == closed && top_g_status == closed)
+					-> topGate(i, opening).Lock(top_g_status = opening)							% Top gate starts opening
+				+ 	(top_g_status == opening) 
+					-> topGate(i, opened).Lock(top_g_status = opened)							% Top gate is open
+				+ 	(top_g_status == opened && top_i_light == red && top_o_light == red) 
+					-> light_TO(i,green).Lock(top_o_light = green)								% Top outside light set to green
+				+	(top_g_status == opened && top_o_light == green)  
+					-> receiveDownBoat(i, entering).Lock(boat_location = entering)				% Boat can entering				
+				)		
 
 			+	(boat_location == entering) -> (
 					receiveDownBoat(i, inLock).Lock(boat_location = inLock)
 				)
 
 			+	(boat_location == inLock) -> (
-					(top_o_light == green) -> light_TO(i, red).Lock(top_o_light = red)									% Turn outside light red
-					+ 	(top_o_light == red && top_g_status == opened)
-						-> topGate(i, closing).Lock(top_g_status = closing)							% Top gate starts closing
-					+  	(top_g_status == closing)
-						-> topGate(i, closed).Lock(top_g_status = closed)							% Top gate is closed
-					+	(top_g_status == closed && paddle_status == closed && w_level != bottom)
-						-> paddle(i, opening).Lock(paddle_status = opening, w_level = between) 		% Paddle starts opening
-					+ 	(paddle_status == opening)
-						-> paddle(i, opened).Lock(paddle_status = opened)							% Paddle fully opened
-					+ 	(paddle_status == opened && w_level == between)
-						-> detectWater(i, bottom).Lock(w_level = bottom)							% Water is at bottom level
-					+ 	(w_level == bottom && paddle_status == opened)
-						-> paddle(i, closing).Lock(paddle_status = closing)							% Paddle starts closing
-					+ 	(w_level == bottom && paddle_status == closing)
-						-> paddle(i, closed).Lock(paddle_status = closed)							% Paddle fully closed
-					+ 	(w_level == bottom && paddle_status == closed && bottom_g_status == closed) 
-						-> bottomGate(i, opening).Lock(bottom_g_status = opening)					% Bottom gate starts opening
-					+ 	(bottom_g_status == opening)
-						-> bottomGate(i, opened).Lock(bottom_g_status = opened)						% Bottom gate is open
-					+ 	(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red)
-						-> light_BI(i, green).Lock(bottom_i_light = green)							% Bottom inside light turns green
-					+ 	(bottom_i_light == green)
-						-> receiveDownBoat(i, exiting).Lock(boat_location = exiting)
+					(top_o_light == green) 
+					-> light_TO(i, red).Lock(top_o_light = red)									% Turn top outside light red
+				+ 	(top_o_light == red && top_g_status == opened)
+					-> topGate(i, closing).Lock(top_g_status = closing)							% Top gate starts closing
+				+  	(top_g_status == closing)
+					-> topGate(i, closed).Lock(top_g_status = closed)							% Top gate is closed
+				+	(top_g_status == closed && paddle_status == closed && w_level != bottom)
+					-> paddle(i, opening).Lock(paddle_status = opening, w_level = between) 		% Paddle starts opening
+				+ 	(paddle_status == opening)
+					-> paddle(i, opened).Lock(paddle_status = opened)							% Paddle fully opened
+				+ 	(paddle_status == opened && w_level == between)
+					-> detectWater(i, bottom).Lock(w_level = bottom)							% Water is at bottom level
+				+ 	(w_level == bottom && paddle_status == opened)
+					-> paddle(i, closing).Lock(paddle_status = closing)							% Paddle starts closing
+				+ 	(w_level == bottom && paddle_status == closing)
+					-> paddle(i, closed).Lock(paddle_status = closed)							% Paddle fully closed
+				+ 	(w_level == bottom && paddle_status == closed && bottom_g_status == closed) 
+					-> bottomGate(i, opening).Lock(bottom_g_status = opening)					% Bottom gate starts opening
+				+ 	(bottom_g_status == opening)
+					-> bottomGate(i, opened).Lock(bottom_g_status = opened)						% Bottom gate is open
+				+ 	(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red)
+					-> light_BI(i, green).Lock(bottom_i_light = green)							% Bottom inside light set to green
+				+ 	(bottom_i_light == green)
+					-> receiveDownBoat(i, exiting).Lock(boat_location = exiting)				% Boat can start exiting
 				)
 			+ 	(boat_location == exiting) -> (
 					receiveDownBoat(i, none).Lock(boat_present = empty, boat_location = none)
@@ -117,12 +139,32 @@ proc Lock(	i				:LockNr,
 
 				(boat_location == waiting) -> (
 					(bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)
-				+	(top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)	
-				+	(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red) -> (
-						light_BO(i,green).Lock(bottom_o_light = green)
-					) 
-				+	(bottom_g_status == opened && bottom_o_light == green) -> 
-						receiveUpBoat(i, entering).Lock(boat_location = entering)
+				+	(top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)
+
+				+ 	(top_o_light == green) 
+					-> light_TO(i, red).Lock(top_o_light = red)									% Turn top outside light red
+				+ 	(top_o_light == red && top_g_status == opened)
+					-> topGate(i, closing).Lock(top_g_status = closing)							% Top gate starts closing
+				+  	(top_g_status == closing)
+					-> topGate(i, closed).Lock(top_g_status = closed)							% Top gate is closed
+				+	(top_g_status == closed && paddle_status == closed && w_level != bottom)
+					-> paddle(i, opening).Lock(paddle_status = opening, w_level = between) 		% Paddle starts opening
+				+ 	(paddle_status == opening)
+					-> paddle(i, opened).Lock(paddle_status = opened)							% Paddle fully opened
+				+ 	(paddle_status == opened && w_level == between)
+					-> detectWater(i, bottom).Lock(w_level = bottom)							% Water is at bottom level
+				+ 	(w_level == bottom && paddle_status == opened)
+					-> paddle(i, closing).Lock(paddle_status = closing)							% Paddle starts closing
+				+ 	(w_level == bottom && paddle_status == closing)
+					-> paddle(i, closed).Lock(paddle_status = closed)							% Paddle fully closed
+				+ 	(w_level == bottom && paddle_status == closed && bottom_g_status == closed) 
+					-> bottomGate(i, opening).Lock(bottom_g_status = opening)					% Bottom gate starts opening
+				+ 	(bottom_g_status == opening)
+					-> bottomGate(i, opened).Lock(bottom_g_status = opened)						% Bottom gate is open
+				+	(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red)
+					-> light_BO(i,green).Lock(bottom_o_light = green)							% Bottom outside light set to green 
+				+	(bottom_g_status == opened && bottom_o_light == green) 
+					-> receiveUpBoat(i, entering).Lock(boat_location = entering)				% Boat can start entering
 				)	
 
 			+ 	(boat_location == entering) -> (
@@ -131,29 +173,29 @@ proc Lock(	i				:LockNr,
 
 			+	(boat_location == inLock) -> (
 					(bottom_o_light == green) -> 
-						light_BO(i, red).Lock(bottom_o_light = red)
+						light_BO(i, red).Lock(bottom_o_light = red)								% Turn bottom outside light red
 					+ (bottom_o_light == red && bottom_g_status == opened)
-						-> bottomGate(i, closing).Lock(bottom_g_status = closing)
+						-> bottomGate(i, closing).Lock(bottom_g_status = closing)				% Bottom gate starts closing
 					+ (bottom_g_status == closing)
-						-> bottomGate(i,closed).Lock(bottom_g_status = closed)
-					+ (bottom_g_status == closed && culvert_status == closed && w_level != top)
-						-> culvert(i,opening).Lock(culvert_status = opening, w_level = between)
+						-> bottomGate(i,closed).Lock(bottom_g_status = closed)					% Bottom gate is closed
+					+ (bottom_g_status == closed && culvert_status == closed && w_level != top)	
+						-> culvert(i,opening).Lock(culvert_status = opening, w_level = between)	% Culvert starts opening
 					+ (culvert_status == opening)
-						-> culvert(i,opened).Lock(culvert_status = opened)
+						-> culvert(i,opened).Lock(culvert_status = opened)						% Culvert fully opened
 					+ (w_level == between && culvert_status == opened)
-						-> detectWater(i, top).Lock(w_level = top)
+						-> detectWater(i, top).Lock(w_level = top)								% Water is at top level
 					+ (w_level == top && culvert_status == opened)
-						-> culvert(i,closing).Lock(culvert_status = closing)
+						-> culvert(i,closing).Lock(culvert_status = closing)					% Culvert starts closing
 					+ (w_level == top && culvert_status == closing)
-						-> culvert(i, closed).Lock(culvert_status = closed)
+						-> culvert(i, closed).Lock(culvert_status = closed)						% Culvert is closed
 					+ (w_level == top && culvert_status == closed && top_g_status == closed)
-						-> topGate(i, opening).Lock(top_g_status = opening)
+						-> topGate(i, opening).Lock(top_g_status = opening)						% Top gate starts opening
 					+ (top_g_status == opening) 
-						-> topGate(i, opened).Lock(top_g_status = opened)
+						-> topGate(i, opened).Lock(top_g_status = opened)						% Top gate is open
 					+ (top_g_status == opened && top_o_light == red && top_i_light == red)
-						-> light_TI(i, green).Lock(top_i_light = green)
+						-> light_TI(i, green).Lock(top_i_light = green)							% Top outside light set to green
 					+ (top_i_light == green)
-						-> receiveUpBoat(i, exiting).Lock(boat_location= exiting)
+						-> receiveUpBoat(i, exiting).Lock(boat_location= exiting)				% Boat can start exiting
 				
 			)
 			+ 	(boat_location == exiting) -> (
