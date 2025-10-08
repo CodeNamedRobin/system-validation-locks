@@ -23,11 +23,6 @@ act emergency: LockNr;
 	topGate, bottomGate, culvert, paddle 											: LockNr # GateStatus;		% Top gate actions
 	detectWater																		: LockNr # WaterLevel;
 
-	% Boat actions
-	downBoat: LockNr # BoatLocation;
-
-
-
 
 % Communicating actions
 	sendAvailable, receiveAvailable, assignLock										: LockNr # BoatPresent;
@@ -73,10 +68,13 @@ proc Lock(	i				:LockNr,
 		+ 	(boat_present == downBoat) ->	(
 
 				(boat_location == waiting) -> (
-					(top_g_status == opened && top_i_light == red && top_o_light == red) -> (
+					(bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)
+				+	(top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)
+
+				+	(top_g_status == opened && top_i_light == red && top_o_light == red) -> (
 						light_TO(i,green).Lock(top_o_light = green)
-					) +
-					(top_g_status == opened && top_o_light == green) -> (
+					) 
+				+	(top_g_status == opened && top_o_light == green) -> (
 						receiveDownBoat(i, entering).Lock(boat_location = entering)
 					)
 				)
@@ -116,11 +114,14 @@ proc Lock(	i				:LockNr,
 			)
 
 		+ 	(boat_present == upBoat) ->	(
+
 				(boat_location == waiting) -> (
-					(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red) -> (
+					(bottom_i_light == green) -> light_BI(i,red).Lock(bottom_i_light = red)
+				+	(top_i_light == green) -> light_TI(i,red).Lock(top_i_light = red)	
+				+	(bottom_g_status == opened && bottom_i_light == red && bottom_o_light == red) -> (
 						light_BO(i,green).Lock(bottom_o_light = green)
-					) +
-					(bottom_g_status == opened && bottom_o_light == green) -> 
+					) 
+				+	(bottom_g_status == opened && bottom_o_light == green) -> 
 						receiveUpBoat(i, entering).Lock(boat_location = entering)
 				)	
 
