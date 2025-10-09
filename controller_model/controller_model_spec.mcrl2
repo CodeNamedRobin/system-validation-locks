@@ -43,26 +43,45 @@ proc Lock(	i				:LockNr,
 		) = 
 		
 		(emergency == false) -> (
-		(top_g_status == opening || top_g_status == closing || bottom_g_status == opening || bottom_g_status == closing) -> (
-			emergency(i).Lock(	top_g_status = stopped, 
-								bottom_g_status = stopped, 
-								top_o_light = red,
-								top_i_light = red,
-								bottom_o_light = red,
-								bottom_i_light = red,
-								paddle_status = closing,
-								culvert_status = closing,
-								emergency = true
+			% If any of the gates is moving (opening/closing), they should be stopped
+			(top_g_status == opening || top_g_status == closing || bottom_g_status == opening || bottom_g_status == closing) -> (
+				emergency(i).Lock(	top_g_status = stopped, 
+									bottom_g_status = stopped, 
+									top_o_light = red,
+									top_i_light = red,
+									bottom_o_light = red,
+									bottom_i_light = red,
+									emergency = true
+								)
+			) <> ( 
+				% If the paddle is opening or opened, it should close
+				(paddle_status == opening || paddle_status == opened) ->  
+					emergency(i).Lock(	top_o_light = red,
+										top_i_light = red,
+										bottom_o_light = red,
+										bottom_i_light = red,
+										paddle_status = closing,
+										emergency = true
 							)
-		)
-		<> emergency(i).Lock(	top_o_light = red,
-								top_i_light = red,
-								bottom_o_light = red,
-								bottom_i_light = red,
-								paddle_status = closing,
-								culvert_status = closing,
-								emergency = true
-							)
+				% If the culvert is opening or opened, it should close
+				+ (culvert_status == opening || culvert_status == opened) ->
+					emergency(i).Lock(	top_o_light = red,
+										top_i_light = red,
+										bottom_o_light = red,
+										bottom_i_light = red,
+										culvert_status = closing,
+										emergency = true
+					)
+				% If the paddle or culvert are closing or closed, they should be(come) closed
+				+ ((paddle_status == closing || paddle_status == closed || culvert_status == closing || culvert_status == closed) 
+					&& (paddle_status != opening && paddle_status != opened && culvert_status != opening && culvert_status != opened)) ->
+					emergency(i).Lock(	top_o_light = red,
+										top_i_light = red,
+										bottom_o_light = red,
+										bottom_i_light = red,
+										emergency = true
+					)
+			)
 		)
 
 
