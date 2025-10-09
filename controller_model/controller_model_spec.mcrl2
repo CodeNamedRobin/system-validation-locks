@@ -4,7 +4,7 @@ sort WaterLevel 	= struct top | between | bottom;
 	 GateStatus 	= struct opened | opening | closed | closing | stopped;
 	 BoatLocation 	= struct waiting | entering | inLock | exiting | none;
 	 BoatPresent 	= struct downBoat | upBoat | empty;
-	 LockNr 		= Pos;
+	 LockNr 		= struct l1 | l2;
 	 Emergency		= Bool;
 
 % Non-communicating actions
@@ -264,46 +264,45 @@ proc BoatController(top_waiting: Int, bottom_waiting: Int, l1_boat: BoatLocation
 		-> arriveTop.BoatController(top_waiting = top_waiting + 1) 				% downBoat arrives
 	+ (bottom_waiting <= 3)
 		-> arriveBottom.BoatController(bottom_waiting = bottom_waiting + 1) 	% upBoat arrives
-
 	+ 	(top_waiting > 0) -> (
-			receiveAvailable(1, downBoat).BoatController(top_waiting = top_waiting - 1, l1_boat = waiting)				
-		+ 	receiveAvailable(2, downBoat).BoatController(top_waiting = top_waiting - 1, l2_boat = waiting)
+			receiveAvailable(l1, downBoat).BoatController(top_waiting = top_waiting - 1, l1_boat = waiting)				
+		+ 	receiveAvailable(l2, downBoat).BoatController(top_waiting = top_waiting - 1, l2_boat = waiting)
 		)
 	+	(bottom_waiting > 0) -> (
-			receiveAvailable(1, upBoat).BoatController(bottom_waiting = bottom_waiting - 1, l1_boat = waiting)
-	 	+ 	receiveAvailable(2, upBoat).BoatController(bottom_waiting = bottom_waiting - 1, l2_boat = waiting)
+			receiveAvailable(l1, upBoat).BoatController(bottom_waiting = bottom_waiting - 1, l1_boat = waiting)
+	 	+ 	receiveAvailable(l2, upBoat).BoatController(bottom_waiting = bottom_waiting - 1, l2_boat = waiting)
 		)
 	+ 	(l1_boat == waiting) -> (
-			sendDownBoat(1, entering).BoatController(l1_boat = entering) 
-		+ 	sendUpBoat(1, entering).BoatController(l1_boat = entering)
+			sendDownBoat(l1, entering).BoatController(l1_boat = entering) 
+		+ 	sendUpBoat(l1, entering).BoatController(l1_boat = entering)
 		)
 	+ 	(l2_boat == waiting) -> ( 
-			sendDownBoat(2, entering).BoatController(l2_boat = entering) 
-		+ 	sendUpBoat(2, entering).BoatController(l2_boat = entering)
+			sendDownBoat(l2, entering).BoatController(l2_boat = entering) 
+		+ 	sendUpBoat(l2, entering).BoatController(l2_boat = entering)
 		)
 	+ 	(l1_boat == entering) -> (
-			sendDownBoat(1, inLock).BoatController(l1_boat = inLock)
-		+ 	sendUpBoat(1, inLock).BoatController(l1_boat = inLock)
+			sendDownBoat(l1, inLock).BoatController(l1_boat = inLock)
+		+ 	sendUpBoat(l1, inLock).BoatController(l1_boat = inLock)
 		)
 	+ 	(l2_boat == entering) -> (
-			sendDownBoat(2, inLock).BoatController(l2_boat = inLock) 
-		+ 	sendUpBoat(2, inLock).BoatController(l2_boat = inLock)
+			sendDownBoat(l2, inLock).BoatController(l2_boat = inLock) 
+		+ 	sendUpBoat(l2, inLock).BoatController(l2_boat = inLock)
 		)
 	+ 	(l1_boat == inLock) -> (
-			sendDownBoat(1, exiting).BoatController(l1_boat = exiting) 
-		+ 	sendUpBoat(1, exiting).BoatController(l1_boat = exiting)
+			sendDownBoat(l1, exiting).BoatController(l1_boat = exiting) 
+		+ 	sendUpBoat(l1, exiting).BoatController(l1_boat = exiting)
 		)
 	+ 	(l2_boat == inLock) -> (
-			sendDownBoat(2, exiting).BoatController(l2_boat = exiting) 
-		+ 	sendUpBoat(2, exiting).BoatController(l2_boat = exiting)
+			sendDownBoat(l2, exiting).BoatController(l2_boat = exiting) 
+		+ 	sendUpBoat(l2, exiting).BoatController(l2_boat = exiting)
 		)
 	+ 	(l1_boat == exiting) -> (
-			sendDownBoat(1, none).BoatController(l1_boat = none) 
-		+ 	sendUpBoat(1, none).BoatController(l1_boat = none)
+			sendDownBoat(l1, none).BoatController(l1_boat = none) 
+		+ 	sendUpBoat(l1, none).BoatController(l1_boat = none)
 		)
 	+ 	(l2_boat == exiting) -> (
-			sendDownBoat(2, none).BoatController(l2_boat = none) 
-		+ 	sendUpBoat(2, none).BoatController(l2_boat = none)
+			sendDownBoat(l2, none).BoatController(l2_boat = none) 
+		+ 	sendUpBoat(l2, none).BoatController(l2_boat = none)
 		)
 ;
 
@@ -322,5 +321,5 @@ init allow( {	% Non-Communicating
 	 comm( {	sendAvailable 	|	receiveAvailable 	-> assignLock,
 				sendDownBoat	|	receiveDownBoat		-> downBoat,
 				sendUpBoat		| 	receiveUpBoat		-> upBoat
-			}, Lock(1, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||Lock(2, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));
-			
+
+			}, Lock(l1, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||Lock(l2, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));
