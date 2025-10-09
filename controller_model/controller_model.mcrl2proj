@@ -5,6 +5,7 @@
   <property>safetyGates3</property>
   <property>safetyGates4a</property>
   <property>safetyGates4b</property>
+  <property>Deadlock_check</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>
