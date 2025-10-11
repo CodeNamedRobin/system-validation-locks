@@ -1,25 +1,17 @@
 <root>
  <spec>controller_model_spec.mcrl2</spec>
  <properties>
+  <property>Deadlock_check</property>
+  <property>1aSafetyCulvert</property>
+  <property>1bSafetyPaddle</property>
   <property>2safetyGates</property>
   <property>3safetyGates</property>
   <property>4aSafetyGates</property>
   <property>4bSafetyGates</property>
-  <property>Deadlock_check</property>
-  <property>1aSafetyCulvert</property>
-  <property>1bSafetyPaddle</property>
   <property>5safetyLights</property>
   <property>6safetyLights</property>
   <property>7safetyLights</property>
   <property>8safetyLights</property>
-  <property>13aSafetyEmergency</property>
-  <property>13bSafetyEmergency</property>
-  <property>13cSafetyEmergency</property>
-  <property>13dSafetyEmergency</property>
-  <property>14aSafetyEmergency</property>
-  <property>14bSafetyEmergency</property>
-  <property>15aSafetyEmergency</property>
-  <property>15bSafetyEmergency</property>
   <property>9aSafetyBoats</property>
   <property>9bSafetyBoats</property>
   <property>10aSafetyBoats</property>
@@ -28,6 +20,14 @@
   <property>11bSafetyBoats</property>
   <property>12aSafetyBoats</property>
   <property>12bSafetyBoats</property>
+  <property>13aSafetyEmergency</property>
+  <property>13bSafetyEmergency</property>
+  <property>13cSafetyEmergency</property>
+  <property>13dSafetyEmergency</property>
+  <property>14aSafetyEmergency</property>
+  <property>14bSafetyEmergency</property>
+  <property>15aSafetyEmergency</property>
+  <property>15bSafetyEmergency</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>
