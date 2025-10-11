@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.(bottomGate(i, closed)||bottomGate(i, opening)||bottomGate(i, closing)).!bottomGate(i,opened)*.(light_BO(i, green)||light_BI(i, green))]false

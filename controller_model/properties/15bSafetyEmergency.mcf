@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.(bottomGate(i, opening) || bottomGate(i, closing)).!(bottomGate(i, opened) || bottomGate(i, closed))*.emergency(i).!bottomGate(i, stopped)*.emergencyOver(i)]false

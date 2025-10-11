@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.(culvert(i, opened)||culvert(i, opening)||culvert(i, closing)).!culvert(i, closed)*.paddle(i, opening)]false

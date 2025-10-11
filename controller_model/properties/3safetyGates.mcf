@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.(topGate(i, closed)||topGate(i, opening)||topGate(i, closing)).!topGate(i,opened)*.(light_TO(i, green)||light_TI(i, green))]false

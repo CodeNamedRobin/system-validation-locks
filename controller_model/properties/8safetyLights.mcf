@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.light_BI(i,green).!light_BI(i,red)*.light_BO(i,green)]false

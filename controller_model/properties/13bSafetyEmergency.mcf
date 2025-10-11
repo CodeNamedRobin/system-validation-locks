@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.light_TI(i, green).!light_TI(i,red)*.emergency(i).!light_TI(i, red)*.emergencyOver(i)]false
