@@ -1,0 +1,1 @@
+forall i: LockNr.[!light_BO(i,green)*.upBoat(i,entering)]false

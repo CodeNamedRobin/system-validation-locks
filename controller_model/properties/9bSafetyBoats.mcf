@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.upBoat(i, exiting).!upBoat(i, none)*.topGate(i, closing)]false

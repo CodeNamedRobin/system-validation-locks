@@ -20,6 +20,14 @@
   <property>14bSafetyEmergency</property>
   <property>15aSafetyEmergency</property>
   <property>15bSafetyEmergency</property>
+  <property>9aSafetyBoats</property>
+  <property>9bSafetyBoats</property>
+  <property>10aSafetyBoats</property>
+  <property>10bSafetyBoats</property>
+  <property>11aSafetyBoats</property>
+  <property>11bSafetyBoats</property>
+  <property>12aSafetyBoats</property>
+  <property>12bSafetyBoats</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>
