@@ -28,6 +28,9 @@
   <property>14bSafetyEmergency</property>
   <property>15aSafetyEmergency</property>
   <property>15bSafetyEmergency</property>
+  <property>testArrive</property>
+  <property>no deadlock if no emergency</property>
+  <property>Liveness setup</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>

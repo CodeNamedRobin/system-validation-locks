@@ -1,0 +1,1 @@
+[arriveBottom.!(downBoat(l1, exiting) || downBoat(l2, exiting))]<true*.downBoat(l1, exiting) || downBoat(l2, exiting)>true
