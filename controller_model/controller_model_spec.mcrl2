@@ -121,7 +121,7 @@ proc Lock(	i				:LockNr,
 					-> light_TI(i,red).Lock(top_i_light = red)									% Turn inner top light red if necessary	 
 				+ 	(bottom_o_light == green) 
 					-> light_BO(i, red).Lock(bottom_o_light = red)								% Turn bottom outside light red 
-				+ 	(bottom_o_light == red && (bottom_g_status == opened || bottom_g_status == stopped))
+				+ 	(bottom_o_light == red && bottom_i_light == red && (bottom_g_status == opened || bottom_g_status == stopped))
 					-> bottomGate(i, closing).Lock(bottom_g_status = closing)					% Bottom gate starts closing
 				+ 	(bottom_g_status == closing)
 					-> bottomGate(i,closed).Lock(bottom_g_status = closed)						% Bottom gate is closed
@@ -195,7 +195,7 @@ proc Lock(	i				:LockNr,
 					-> light_TI(i,red).Lock(top_i_light = red)									% Turn top inside light red if necessary
 				+ 	(top_o_light == green) 
 					-> light_TO(i, red).Lock(top_o_light = red)									% Turn top outside light red
-				+ 	(top_o_light == red && (top_g_status == opened || top_g_status == stopped))
+				+ 	(top_o_light == red && top_i_light == red && (top_g_status == opened || top_g_status == stopped))
 					-> topGate(i, closing).Lock(top_g_status = closing)							% Top gate starts closing
 				+  	(top_g_status == closing)
 					-> topGate(i, closed).Lock(top_g_status = closed)							% Top gate is closed
