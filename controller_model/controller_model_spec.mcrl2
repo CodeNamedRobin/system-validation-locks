@@ -100,7 +100,7 @@ proc Lock(	i				:LockNr,
 
 
 		+ 	(emergency == true) -> (
-				emergencyOver(i).Lock(emergency = false)
+				(paddle_status == closed && culvert_status == closed) -> emergencyOver(i).Lock(emergency = false)
 				+ (paddle_status == closing) -> paddle(i, closed).Lock(paddle_status = closed)
 				+ (culvert_status == closing) -> culvert(i, closed).Lock(culvert_status = closed)
 		)
