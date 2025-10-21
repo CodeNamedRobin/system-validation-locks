@@ -45,7 +45,8 @@ proc Lock(	i				:LockNr,
 		(emergency == false) -> (
 			% If any of the gates is moving (opening/closing), they should be stopped
 			(top_g_status == opening || top_g_status == closing) -> ( 
-				emergency(i).Lock(	top_g_status = stopped, 
+				emergency(i).topGate(i,stopped).light_TO(i,red).light_TO(i,red).light_BO(i,red).light_BI(i,red).
+							Lock(	top_g_status = stopped, 
 									top_o_light = red,
 									top_i_light = red,
 									bottom_o_light = red,
@@ -54,7 +55,8 @@ proc Lock(	i				:LockNr,
 								)
 			)
 			+ (bottom_g_status == opening || bottom_g_status == closing) -> (
-				emergency(i).Lock(	bottom_g_status = stopped, 
+				emergency(i).bottomGate(i,stopped).light_TO(i,red).light_TO(i,red).light_BO(i,red).light_BI(i,red).
+							Lock(	bottom_g_status = stopped, 
 									top_o_light = red,
 									top_i_light = red,
 									bottom_o_light = red,
@@ -64,7 +66,8 @@ proc Lock(	i				:LockNr,
 			) 
 				% If the paddle is opening or opened, it should close
 			+	(paddle_status == opening || paddle_status == opened) ->  
-					emergency(i).Lock(	top_o_light = red,
+					emergency(i).paddle(i,closing).light_TO(i,red).light_TO(i,red).light_BO(i,red).light_BI(i,red).
+								Lock(	top_o_light = red,
 										top_i_light = red,
 										bottom_o_light = red,
 										bottom_i_light = red,
@@ -73,7 +76,8 @@ proc Lock(	i				:LockNr,
 							)
 				% If the culvert is opening or opened, it should close
 			+ 	(culvert_status == opening || culvert_status == opened) ->
-					emergency(i).Lock(	top_o_light = red,
+					emergency(i).culvert(i,closing).light_TO(i,red).light_TO(i,red).light_BO(i,red).light_BI(i,red).
+								Lock(	top_o_light = red,
 										top_i_light = red,
 										bottom_o_light = red,
 										bottom_i_light = red,
@@ -84,7 +88,8 @@ proc Lock(	i				:LockNr,
 			+ 	((paddle_status == closing || paddle_status == closed || culvert_status == closing || culvert_status == closed) 
 					&& (paddle_status != opening && paddle_status != opened && culvert_status != opening && culvert_status != opened
 					&& top_g_status != opening && top_g_status != closing && bottom_g_status != opening && bottom_g_status != closing)) ->
-					emergency(i).Lock(	top_o_light = red,
+					emergency(i).light_TO(i,red).light_TO(i,red).light_BO(i,red).light_BI(i,red).
+								Lock(	top_o_light = red,
 										top_i_light = red,
 										bottom_o_light = red,
 										bottom_i_light = red,
