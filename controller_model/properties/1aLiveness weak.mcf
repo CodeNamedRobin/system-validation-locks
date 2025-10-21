@@ -1,1 +1,1 @@
-[true*.arriveTop]<true*.(downBoat(l1, exiting) || downBoat(l2, exiting))>true
+[true*.arriveTop]exists i:LockNr.<true*.(downBoat(i, exiting))>true

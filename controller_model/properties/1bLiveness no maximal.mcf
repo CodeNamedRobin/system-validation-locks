@@ -1,0 +1,1 @@
+[true*.arriveTop] exists i:LockNr.mu X.([!downBoat(i, exiting)]X && <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

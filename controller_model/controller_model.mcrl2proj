@@ -29,7 +29,7 @@
   <property>15aSafetyEmergency</property>
   <property>15bSafetyEmergency</property>
   <property>no deadlock if no emergency</property>
-  <property>Liveness setup</property>
+  <property>1bLiveness no maximal</property>
   <property>1bLiveness</property>
   <property>1aLiveness weak</property>
  </properties>
