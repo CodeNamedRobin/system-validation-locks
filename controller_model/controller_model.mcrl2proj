@@ -29,9 +29,12 @@
   <property>15aSafetyEmergency</property>
   <property>15bSafetyEmergency</property>
   <property>no deadlock if no emergency</property>
-  <property>1bLiveness no maximal</property>
-  <property>1bLiveness</property>
+  <property>1bLivenessNoLoops</property>
   <property>1aLiveness weak</property>
+  <property>2aLiveness Weak</property>
+  <property>1cLivenessTest no max</property>
+  <property>2bLivenessNoLoops</property>
+  <property>Liveness Setup assignLock</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>

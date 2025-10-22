@@ -1,0 +1,2 @@
+[true*.arriveTop]mu X.([!(assignLock(l1, downBoat) || assignLock(l2, downBoat) || emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X 
+&& <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

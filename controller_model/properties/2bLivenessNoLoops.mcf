@@ -1,0 +1,4 @@
+[true*.arriveBottom]exists i:LockNr.nu X. mu Y.((<upBoat(i, exiting)>true 
+    && [!(upBoat(i, exiting) || emergency(l1) || emergency (l2) || arriveTop || arriveBottom)]X) 
+    || (!<upBoat(i, exiting)>true 
+    && [!(upBoat(i, exiting) || emergency(l1) || emergency (l2) || arriveTop || arriveBottom)]Y))
