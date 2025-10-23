@@ -1,0 +1,3 @@
+forall i:LockNr.[true*.assignLock(i, upBoat).!light_BO(i,green)*.light_BO(i,green)]
+mu X.([!(upBoat(i,inLock) || emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X
+	&& <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

@@ -1,1 +1,1 @@
-[true*.arriveBottom]exists i:LockNr.<true*.upBoat(i,exiting)>true
+[true*.arriveBottom.!(upBoat(l1, exiting) || upBoat(l2, exiting))*]exists i:LockNr.<true*.upBoat(i,exiting)>true

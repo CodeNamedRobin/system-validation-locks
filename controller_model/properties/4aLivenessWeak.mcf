@@ -1,0 +1,2 @@
+[true*.((bottomGate(l1, closed).!bottomGate(l1, opening)*. bottomGate(l2, closed). !(bottomGate(l1, opening) || bottomGate(l2, opening))*) 
++ (bottomGate(l2, closed).!bottomGate(l2, opening)*. bottomGate(l1, closed). !(bottomGate(l1, opening) || bottomGate(l2, opening))*)). arriveBottom.!(bottomGate(l1, opening) || bottomGate(l2, opening))*] exists i:LockNr.<true*.bottomGate(i, opened)>true

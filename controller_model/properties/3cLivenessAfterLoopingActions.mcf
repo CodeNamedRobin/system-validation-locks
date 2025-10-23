@@ -1,0 +1,3 @@
+forall i:LockNr.[!(topGate(l1, opening) || topGate(l2, opening))*.arriveTop.!(topGate(l1, opening) || topGate(l2, opening))*. emergency(i) || arriveTop || arriveBottom]
+mu X.([!(topGate(l1, opened) || topGate(l2, opened) || emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X
+	&& <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

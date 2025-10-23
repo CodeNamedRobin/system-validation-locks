@@ -1,0 +1,2 @@
+[true*.arriveTop.!(topGate(l1, opening) || topGate(l2, opening))*]
+		exists i:LockNr.<true*.topGate(i, opening)>true

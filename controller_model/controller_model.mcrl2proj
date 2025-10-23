@@ -32,9 +32,26 @@
   <property>1bLivenessNoLoops</property>
   <property>1aLiveness weak</property>
   <property>2aLiveness Weak</property>
-  <property>1cLivenessTest no max</property>
+  <property>1bLiveness no loops</property>
   <property>2bLivenessNoLoops</property>
-  <property>Liveness Setup assignLock</property>
+  <property>5Liveness Setup assignLock</property>
+  <property>1dLivenessAfterEmergency</property>
+  <property>1cLivenessAfterEmergencyMu</property>
+  <property>1cLivenessAfterLoopingActions</property>
+  <property>2cLivenessAfterLoopingActions</property>
+  <property>4aLivenessWeak</property>
+  <property>4bLivenessNoLoops</property>
+  <property>4cLivenessAfterLoopingActions</property>
+  <property>3aLivenessWeak</property>
+  <property>3bLivenessNo Loops</property>
+  <property>3cLivenessAfterLoopingActions</property>
+  <property>5aLivenessWeak</property>
+  <property>5bLivenessNoLoops</property>
+  <property>5cLivenessAfterLoopingActions</property>
+  <property>6Liveness Setup</property>
+  <property>6aLivenessWeak</property>
+  <property>6bLivenessNoLoops</property>
+  <property>6cLivenessAfterLoopingActions</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>

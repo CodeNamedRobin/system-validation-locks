@@ -1,0 +1,3 @@
+[!(topGate(l1, opening) || topGate(l2, opening))*.arriveTop]mu X.([!(topGate(l1, opened) || topGate(l2, opened)
+	|| emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X
+	&& <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

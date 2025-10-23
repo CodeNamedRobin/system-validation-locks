@@ -1,0 +1,1 @@
+forall i:LockNr. [true*.assignLock(i, downBoat).!light_TO(i,green)*.light_TO(i,green)]<true*.downBoat(i, inLock)>true
