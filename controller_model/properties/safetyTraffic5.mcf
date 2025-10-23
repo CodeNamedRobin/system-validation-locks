@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.light_TO(i, green).true*.light_TI(i, green).true*.light_TO(i, red)]false

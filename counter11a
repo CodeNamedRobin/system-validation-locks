@@ -1,0 +1,24 @@
+<Graph type="1" states="4" statelabels="4" transitionlabels="4" transitions="3">
+  <StateLabel value="0" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,none,none)"/>
+  <StateLabel value="1" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,1,none,none)"/>
+  <StateLabel value="2" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,upBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="3" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,upBoat,entering,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,entering,none)"/>
+  <State green="1" y="-34.064308" isInitial="1" x="-17.532421" value="0" red="1" locked="0" is_probabilistic="0" z="0" blue="1"/>
+  <StateLabelNode green="0" y="-33.930801" x="-15.777045" value="0" red="0" locked="0" z="0" labelindex="0" blue="0"/>
+  <State green="1" y="-11.952154" isInitial="0" x="-6.83147" value="1" red="1" locked="0" is_probabilistic="0" z="0" blue="1"/>
+  <StateLabelNode green="0" y="-10.875897" x="-8.2207537" value="1" red="0" locked="0" z="0" labelindex="1" blue="0"/>
+  <State green="1" y="12.368605" isInitial="0" x="6.044991" value="2" red="1" locked="0" is_probabilistic="0" z="0" blue="1"/>
+  <StateLabelNode green="0" y="13.161728" x="4.4722919" value="2" red="0" locked="0" z="0" labelindex="2" blue="0"/>
+  <State green="1" y="33.647858" isInitial="0" x="18.318901" value="3" red="1" locked="0" is_probabilistic="0" z="0" blue="1"/>
+  <StateLabelNode green="0" y="32.084312" x="19.119072" value="3" red="0" locked="0" z="0" labelindex="3" blue="0"/>
+  <TransitionLabel value="0" label="τ"/>
+  <TransitionLabel value="1" label="arriveBottom"/>
+  <TransitionLabel value="2" label="assignLock(l1, upBoat)"/>
+  <TransitionLabel value="3" label="upBoat(l1, entering)"/>
+  <Transition from="0" y="-23.380772" x="-10.061502" value="0" locked="0" z="0" to="1"/>
+  <TransitionLabelNode green="0" y="-21.54579" x="-10.150389" value="0" red="0" locked="0" z="0" labelindex="1" blue="0"/>
+  <Transition from="1" y="1.6957767" x="-2.8283663" value="1" locked="0" z="0" to="2"/>
+  <TransitionLabelNode green="0" y="2.9050224" x="-4.4316115" value="1" red="0" locked="0" z="0" labelindex="2" blue="0"/>
+  <Transition from="2" y="21.818316" x="14.163428" value="2" locked="0" z="0" to="3"/>
+  <TransitionLabelNode green="0" y="20.4799" x="12.868389" value="2" red="0" locked="0" z="0" labelindex="3" blue="0"/>
+</Graph>
