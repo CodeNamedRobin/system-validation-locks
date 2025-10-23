@@ -42,7 +42,7 @@ proc Lock(	i				:LockNr,
 			emergency		:Emergency
 		) = 
 		
-		(emergency == false) -> (
+		(emergency == true) -> (
 			% If any of the gates is moving (opening/closing), they should be stopped
 			(top_g_status == opening || top_g_status == closing) -> ( 
 				emergency(i).topGate(i,stopped).
@@ -132,15 +132,14 @@ proc Lock(	i				:LockNr,
 										bottom_i_light = red,
 										emergency = true
 					)
+
+			+ 	(paddle_status == closed && culvert_status == closed) -> emergencyOver(i).Lock(emergency = false)
+
+			+ 	(paddle_status == closing) -> paddle(i, closed).Lock(paddle_status = closed)
+
+			+ 	(culvert_status == closing) -> culvert(i, closed).Lock(culvert_status = closed)
+
 			)
-		
-
-
-		+ 	(emergency == true) -> (
-				(paddle_status == closed && culvert_status == closed) -> emergencyOver(i).Lock(emergency = false)
-				+ (paddle_status == closing) -> paddle(i, closed).Lock(paddle_status = closed)
-				+ (culvert_status == closing) -> culvert(i, closed).Lock(culvert_status = closed)
-		)
 		
 		+ 	(boat_present == empty) -> (
 
@@ -371,4 +370,4 @@ init allow( {	% Non-Communicating
 				sendDownBoat	|	receiveDownBoat		-> downBoat,
 				sendUpBoat		| 	receiveUpBoat		-> upBoat
 
-			}, Lock(l1, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||Lock(l2, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));
+			}, Lock(l1, bottom, closed, opened, red, red, red, red, closed, closed, empty, none, false)||Lock(l2, bottom, closed, opened, red, red, red, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));

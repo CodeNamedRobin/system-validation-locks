@@ -1,0 +1,50 @@
+<Graph states="8" statelabels="8" type="1" transitionlabels="8" transitions="8">
+  <StateLabel value="0" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,none,none)"/>
+  <StateLabel value="1" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,1,0,none,none)"/>
+  <StateLabel value="2" label="(1,bottom,closed,opened,red,red,green,red,closed,closed,downBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="3" label="(1,bottom,closed,opened,red,red,red,red,closed,closed,downBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="4" label="(1,bottom,closed,closing,red,red,red,red,closed,closed,downBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="5" label="(3,bottom,closed,closed,green,green,green,green,closed,closed,downBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="6" label="(1,bottom,closed,stopped,red,red,red,red,closed,closed,downBoat,waiting,true,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <StateLabel value="7" label="(1,bottom,closed,stopped,red,red,red,red,closed,closed,downBoat,waiting,false,1,bottom,closed,opened,red,red,green,red,closed,closed,empty,none,false,0,0,waiting,none)"/>
+  <State green="1" y="-9.7410803" x="112.50089" red="1" value="0" is_probabilistic="0" locked="0" blue="1" isInitial="1" z="0"/>
+  <StateLabelNode green="0" y="-7.1286411" x="111.02156" red="0" value="0" labelindex="0" locked="0" blue="0" z="0"/>
+  <State green="1" y="-12.527264" x="85.750389" red="1" value="1" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="-11.307506" x="83.992516" red="0" value="1" labelindex="1" locked="0" blue="0" z="0"/>
+  <State green="1" y="-13.526102" x="52.487556" red="1" value="2" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="-15.162189" x="51.144779" red="0" value="2" labelindex="2" locked="0" blue="0" z="0"/>
+  <State green="1" y="-11.011889" x="16.322952" red="1" value="3" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="-13.47482" x="15.712736" red="0" value="3" labelindex="3" locked="0" blue="0" z="0"/>
+  <State green="1" y="-2.7492683" x="-19.871904" red="1" value="4" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="-2.7492683" x="-19.871904" red="0" value="4" labelindex="4" locked="0" blue="0" z="0"/>
+  <State green="1" y="6.0533442" x="-55.176571" red="1" value="5" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="4.2730021" x="-54.199451" red="0" value="5" labelindex="5" locked="0" blue="0" z="0"/>
+  <State green="1" y="18.432087" x="-86.658165" red="1" value="6" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="19.324966" x="-84.592255" red="0" value="6" labelindex="6" locked="0" blue="0" z="0"/>
+  <State green="1" y="26.63448" x="-104.97195" red="1" value="7" is_probabilistic="0" locked="0" blue="1" isInitial="0" z="0"/>
+  <StateLabelNode green="0" y="28.496365" x="-102.81365" red="0" value="7" labelindex="7" locked="0" blue="0" z="0"/>
+  <TransitionLabel value="0" label="τ"/>
+  <TransitionLabel value="1" label="arriveTop"/>
+  <TransitionLabel value="2" label="assignLock(l1, downBoat)"/>
+  <TransitionLabel value="3" label="light_BO(l1, red)"/>
+  <TransitionLabel value="4" label="bottomGate(l1, closing)"/>
+  <TransitionLabel value="5" label="emergency(l1)"/>
+  <TransitionLabel value="6" label="bottomGate(l1, stopped)"/>
+  <TransitionLabel value="7" label="emergencyOver(l1)"/>
+  <Transition y="-7.8108864" x="99.32869" to="1" value="0" from="0" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="-5.6123719" x="97.835838" red="0" value="0" labelindex="1" locked="0" blue="0" z="0"/>
+  <Transition y="-13.73112" x="66.849876" to="2" value="1" from="1" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="-13.446938" x="65.037094" red="0" value="1" labelindex="2" locked="0" blue="0" z="0"/>
+  <Transition y="-15.598531" x="33.961933" to="3" value="2" from="2" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="-17.951664" x="33.188438" red="0" value="2" labelindex="3" locked="0" blue="0" z="0"/>
+  <Transition y="-6.8805785" x="-1.7744761" to="4" value="3" from="3" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="-6.8805785" x="-1.7744761" red="0" value="3" labelindex="4" locked="0" blue="0" z="0"/>
+  <Transition y="1.652038" x="-37.524239" to="5" value="4" from="4" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="1.652038" x="-37.524239" red="0" value="4" labelindex="5" locked="0" blue="0" z="0"/>
+  <Transition y="11.172873" x="-68.263962" to="6" value="5" from="5" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="10.704453" x="-66.305954" red="0" value="5" labelindex="6" locked="0" blue="0" z="0"/>
+  <Transition y="21.616917" x="-92.584122" to="7" value="6" from="6" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="22.556168" x="-90.303619" red="0" value="6" labelindex="7" locked="0" blue="0" z="0"/>
+  <Transition y="27.171078" x="-97.16227" to="6" value="7" from="7" locked="0" z="0"/>
+  <TransitionLabelNode green="0" y="29.755058" x="-95.571365" red="0" value="7" labelindex="5" locked="0" blue="0" z="0"/>
+</Graph>
