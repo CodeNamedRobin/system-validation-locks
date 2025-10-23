@@ -371,4 +371,4 @@ init allow( {	% Non-Communicating
 				sendDownBoat	|	receiveDownBoat		-> downBoat,
 				sendUpBoat		| 	receiveUpBoat		-> upBoat
 
-			}, Lock(l1, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||Lock(l2, bottom, closed, opened, red, red, green, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));
+			}, Lock(l1, bottom, closed, opened, red, red, red, red, closed, closed, empty, none, false)||Lock(l2, bottom, closed, opened, red, red, red, red, closed, closed, empty, none, false)||BoatController(0,0, none, none)));
