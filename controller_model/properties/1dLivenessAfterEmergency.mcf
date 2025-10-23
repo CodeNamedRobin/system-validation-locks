@@ -1,1 +1,0 @@
-forall i:LockNr.[true*.arriveTop.!(downBoat(l1, exiting) || downBoat(l2, exiting))*.emergency(i)]<true*. downBoat(l1, exiting) || downBoat(l2, exiting)>true

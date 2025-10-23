@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.emergency(i).!emergencyOver(i)*]<true*.emergencyOver(i)>true

@@ -34,8 +34,6 @@
   <property>1bLiveness no loops</property>
   <property>2bLivenessNoLoops</property>
   <property>5Liveness Setup assignLock</property>
-  <property>1dLivenessAfterEmergency</property>
-  <property>1cLivenessAfterEmergencyMu</property>
   <property>1cLivenessAfterLoopingActions</property>
   <property>2cLivenessAfterLoopingActions</property>
   <property>4aLivenessWeak</property>
@@ -51,6 +49,15 @@
   <property>6aLivenessWeak</property>
   <property>6bLivenessNoLoops</property>
   <property>6cLivenessAfterLoopingActions</property>
+  <property>7aLivenessWeak</property>
+  <property>7bLivenessNoLoops</property>
+  <property>7cLivenessAfterLoopinActions</property>
+  <property>8aLivenessWeak</property>
+  <property>8bLivenessNoLoops</property>
+  <property>8cLivenessAfterLoopingActions</property>
+  <property>9aLivenessWeak</property>
+  <property>9bLivenessNoLoops</property>
+  <property>9cLivenessAfterLoopingActions</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>

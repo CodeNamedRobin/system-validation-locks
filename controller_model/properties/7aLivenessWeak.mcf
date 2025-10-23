@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.downBoat(i, inLock). !downBoat(i, none)*]<true*.downBoat(i, none)>true

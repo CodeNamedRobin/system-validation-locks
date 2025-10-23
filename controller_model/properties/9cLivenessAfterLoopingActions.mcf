@@ -1,0 +1,4 @@
+forall i:LockNr.[true*.emergency(i).!emergencyOver(i)*. 
+emergency(l1) || emergency(l2) || arriveTop || arriveBottom]
+mu X.([!(emergencyOver(i) || emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X
+	&& <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)
