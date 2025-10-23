@@ -2,6 +2,7 @@
  <spec>controller_model_spec.mcrl2</spec>
  <properties>
   <property>Deadlock_check</property>
+  <property>no deadlock if no emergency</property>
   <property>1aSafetyCulvert</property>
   <property>1bSafetyPaddle</property>
   <property>2safetyGates</property>
@@ -28,11 +29,10 @@
   <property>14bSafetyEmergency</property>
   <property>15aSafetyEmergency</property>
   <property>15bSafetyEmergency</property>
-  <property>no deadlock if no emergency</property>
-  <property>1bLivenessNoLoops</property>
   <property>1aLiveness weak</property>
-  <property>2aLiveness Weak</property>
+  <property>1bLivenessNoLoops</property>
   <property>1cLivenessTest no max</property>
+  <property>2aLiveness Weak</property>
   <property>2bLivenessNoLoops</property>
   <property>Liveness Setup assignLock</property>
  </properties>

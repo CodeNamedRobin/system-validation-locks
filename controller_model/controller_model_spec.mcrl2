@@ -42,7 +42,7 @@ proc Lock(	i				:LockNr,
 			emergency		:Emergency
 		) = 
 		
-		(emergency == false) -> (
+		(emergency == true) -> (
 			% If any of the gates is moving (opening/closing), they should be stopped
 			(top_g_status == opening || top_g_status == closing) -> ( 
 				emergency(i).topGate(i,stopped).
