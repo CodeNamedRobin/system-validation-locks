@@ -1,5 +1,5 @@
 forall i:LockNr.[true*.((bottomGate(l1, closed).!bottomGate(l1, opening)*. bottomGate(l2, closed). !(bottomGate(l1, opening) || bottomGate(l2, opening))*) 
 + (bottomGate(l2, closed).!bottomGate(l2, opening)*. bottomGate(l1, closed). !(bottomGate(l1, opening) || bottomGate(l2, opening))*)). arriveBottom.
-!(bottomGate(l1, opening) || bottomGate(l2, opening))*.emergency(i) || arriveTop || arriveBottom]
+!(bottomGate(l1, opened) || bottomGate(l2, opened))*.emergency(i) || arriveTop || arriveBottom]
 mu X.([!(bottomGate(l1, opened) || bottomGate(l2, opened) || emergency(l1) || emergency(l2) || arriveTop || arriveBottom)]X
 && <!(emergency(l1) || emergency(l2) || arriveTop || arriveBottom)>true)

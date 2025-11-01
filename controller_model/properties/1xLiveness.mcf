@@ -1,0 +1,1 @@
+forall i:LockNr.[true*.assignLock(i, downBoat)]nu X. mu Y.(([emergency(l1) || emergency (l2) || arriveTop || arriveBottom]X && <true*.downBoat(i, exiting)>true) || [!(downBoat(i, exiting) || emergency(l1) || emergency (l2) || arriveTop || arriveBottom)]Y && <!(emergency(l1) || emergency (l2) || arriveTop || arriveBottom)>true)

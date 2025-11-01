@@ -58,6 +58,7 @@
   <property>9aLivenessWeak</property>
   <property>9bLivenessNoLoops</property>
   <property>9cLivenessAfterLoopingActions</property>
+  <property>1xLiveness</property>
  </properties>
  <jittyc>false</jittyc>
  <linearisation_method>regular</linearisation_method>
